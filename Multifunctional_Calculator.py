@@ -2,26 +2,25 @@ import math
 
 import random
 
-
 def f1(num_1, num_2):
-    function_op = input("Введите операцию (1 - Сложение, 2 - Вычитание, 3 - Умножение, 4 - Деление, "
+    function_op = int(input("Введите операцию (1 - Сложение, 2 - Вычитание, 3 - Умножение, 4 - Деление, "
                         "5 - Возведение в степень, 6 - Целое деление, 7 - Остаток от деления, 8 - Квадратный корень (только "
-                        "для первого числа)) ")
-    if function_op == "1":
+                        "для первого числа)) "))
+    if function_op == 1:
         print(f"Ответ равен {num_1 + num_2}")
-    elif function_op == "2":
+    elif function_op == 2:
         print(f"Ответ равен {num_1 - num_2}")
-    elif function_op == "3":
+    elif function_op == 3:
         print(f"Ответ равен {num_1 * num_2}")
-    elif function_op == "4":
+    elif function_op == 4:
         print(f"Ответ равен {num_1 / num_2}")
-    elif function_op == "5":
+    elif function_op == 5:
         print(f"Ответ равен {num_1 ** num_2}")
-    elif function_op == "6":
+    elif function_op == 6:
         print(f"Ответ равен {num_1 // num_2}")
-    elif function_op == "7":
+    elif function_op == 7:
         print(f"Ответ равен {num_1 % num_2}")
-    elif function_op == "8":
+    elif function_op == 8:
         print(f"Ответ равен {num_1 ** 0.5}")
     else:
         print(f"Некорректная функция {function_op}")
@@ -37,19 +36,16 @@ def f2(num_1, num_2):
 
 
 def f3(nums):
-    function_sort = input("Введите вид сортировки (1 - По возрастанию, 2 - По убыванию) ")
+    rev = False
+    function_sort = int(input("Введите вид сортировки (1 - По возрастанию, 2 - По убыванию) "))
     nums_str = ""
-    if function_sort == "По возрастанию" or function_sort == "1":
-        nums.sort()
-        for i in nums:
-            nums_str += str(f"{i} ")
-        print(nums_str)
-    elif function_sort == "По убыванию" or function_sort == "2":
-        nums.sort(reverse=True)
-        for i in nums:
-            nums_str += str(f"{i} ")
-        print(nums_str)
-    else:
+    if function_sort == 2:
+        rev = True
+    nums.sort(reverse=rev)
+    for i in nums:
+        nums_str += str(f"{i} ")
+    print(nums_str)
+    if function_sort not in [1, 2]:
         print(f"Некорректная функция {function_sort}")
 
 
@@ -159,14 +155,19 @@ def f12(s):
 
 def f13():
     function_dr = int(input("Введите операцию (1 - Сложение, 2 - Вычитание, 3 - Умножение, 4 - Деление) "))
-    ch_1, zn_1 = map(int, input("Введите первую дробь: числитель / знаменатель ").split(" / "))
-    ch_2, zn_2 = map(int, input("Введите вторую дробь: числитель / знаменатель ").split(" / "))
+    c_1, ch_1, zn_1 = map(int, input("Введите первую дробь: целая часть (если её нет введите на её место 0) / числитель / знаменатель ").split(" / "))
+    c_2, ch_2, zn_2 = map(int, input("Введите вторую дробь: целая часть (если её нет введите на её место 0) / числитель / знаменатель ").split(" / "))
     ch_answ = None
     zn_answ = None
-    ch_1 *= zn_2
-    ch_2 *= zn_1
-    zn_1 *= zn_2
-    zn_2 *= zn_1
+    c_answ = 0
+    if function_dr == 1:
+        c_answ += c_1
+        c_answ += c_2
+    elif function_dr == 2:
+        c_answ += c_1 - c_2
+    elif function_dr in [3, 4]:
+        ch_1 += c_1 * zn_1
+        ch_2 += c_2 * zn_2
     if function_dr == 1:
         ch_answ = ch_1 + ch_2
         zn_answ = zn_1
@@ -182,11 +183,10 @@ def f13():
     de = math.gcd(ch_answ, zn_answ)
     ch_answ //= de
     zn_answ //= de
-    c_answ = 0
-    while ch_answ > zn_answ:
+    while ch_answ >= zn_answ:
         ch_answ -= zn_answ
         c_answ += 1
-    print(f"Ответ равен {c_answ} целые, {ch_answ} / {zn_answ}")
+    print(f"Ответ равен {c_answ} целых, {ch_answ} / {zn_answ}")
 
 
 def f14():
@@ -225,7 +225,7 @@ def f16(num):
         num = str(num)
         s_sch_iz = int(input("Введите систему счисления, из которой хотите перевести "))
         ans = int(num, base=s_sch_iz)
-        print(ans)
+        print(f"Число {num} в системе счисления {s_sch_iz}, это {ans} в десятичной")
     elif function_per == 2:
         s_sch_v = int(input(
             "Введите систему счисления, в которую хотите перевести (2 - Двоичная, 8 - Восьмиричная, 16 - Шестнадцатиричная) "))
@@ -235,7 +235,7 @@ def f16(num):
             ans = str(oct(num))[2:]
         elif s_sch_v == 16:
             ans = str(hex(num))[2:].upper()
-        print(ans)
+        print(f"Число {num} в системе счисления {s_sch_v}, это {ans}")
     else:
         print(f"Некорректный вид перевода {function_per}")
 
@@ -244,9 +244,9 @@ def f17(num):
     print(f"Число {num} в научной записи, это {num:E}")
 
 
-version = "3.2.1"
+version = "3.2.2"
 print(f"Добро пожаловать в Многофункциональный калькулятор (да и не только), версия {version}")
-super_function = input(
+super_function = int(input(
     """Введите вид операции:
     0 - Информация о проекте
     1 - Операции с числами,
@@ -264,65 +264,68 @@ super_function = input(
     13 - Операции с дробями,
     14 - Генератор рандомных чисел,
     15 - Генератор надёжного пароля,
-    16 - Перевод числа по системам счисления,
+    16 - Перевод числа в разные системы счисления,
     17 - Переписать число в научную запись
-    """)
+    """))
 
-if super_function in ["1", "2"]:
+if super_function in [1, 2]:
     num_1 = float(input("Введите первое число "))
     num_2 = float(input("Введите второе число "))
-    if super_function == "1":
+    if super_function == 1:
         f1(num_1, num_2)
-    elif super_function == "2":
+    elif super_function == 2:
         f2(num_1, num_2)
-elif super_function in ["3", "4"]:
+elif super_function in [3, 4]:
     nums = list(map(float, input("Введите числа в одну строку через пробел ").split()))
-    if super_function == "3":
+    if super_function == 3:
         f3(nums)
-    elif super_function == "4":
+    elif super_function == 4:
         f4(nums)
-elif super_function in ["5", "6", "7", "8", "9", "10", "11", "12"]:
+elif super_function in [5, 6, 7, 8, 9, 10, 11, 12]:
     st = input("Введите строку ")
-    if super_function == "5":
+    if super_function == 5:
         f5(st)
-    elif super_function == "6":
+    elif super_function == 6:
         f6(st)
-    elif super_function == "7":
+    elif super_function == 7:
         f7(st)
-    elif super_function == "8":
+    elif super_function == 8:
         f8(st)
-    elif super_function == "9":
+    elif super_function == 9:
         f9(st)
-    elif super_function == "10":
+    elif super_function == 10:
         f10(st)
-    elif super_function == "11":
+    elif super_function == 11:
         f11(st)
-    elif super_function == "12":
+    elif super_function == 12:
         f12(st)
-elif super_function in ["13", "14", "15"]:
-    if super_function == "13":
+elif super_function in [13, 14, 15]:
+    if super_function == 13:
         f13()
-    elif super_function == "14":
+    elif super_function == 14:
         f14()
-    elif super_function == "15":
+    elif super_function == 15:
         f15()
-elif super_function == "0":
+elif super_function == 0:
     print("""
 Название проекта - Многофункциональный калькулятор
-Версия - 3.2.1(release)
+Версия - 3.2.2(release)
 Начало разработки проекта - 2 ноября 2025 года
 Последняя версия выпущена 19 декабря 2025 года
 Многофункциональный калькулятор не хранит данные о пользователях, мы заботимся о вашей конфиденциальности, все данные после нового запуска программы стираются
 Что нового в последних версиях:
     1. Проведён тест на баги.
     2. По первому пункту исправлено около 5 багов.
+    3. Функция сортировки чисел (3) существенно улучшена.
+    4. Полностью доделана функция операций с дробями (13).
+    5. Мелкие изменения в коде.
     """)
 
-elif super_function in ["16", "17"]:
+elif super_function in [16, 17]:
     num = int(input("Введите число "))
-    if super_function == "16":
+    if super_function == 16:
         f16(num)
-    elif super_function == "17":
+    elif super_function == 17:
         f17(num)
 else:
     print(f"Некорректная функция {super_function}")
