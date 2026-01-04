@@ -7,21 +7,21 @@ def f1(num_1, num_2):
                         "5 - Возведение в степень, 6 - Целое деление, 7 - Остаток от деления, 8 - Квадратный корень (только "
                         "для первого числа)) "))
     if function_op == 1:
-        print(f"Ответ равен {num_1 + num_2}")
+        print(f"{num_1}+{num_2}={num_1 + num_2}")
     elif function_op == 2:
-        print(f"Ответ равен {num_1 - num_2}")
+        print(f"{num_1}-{num_2}={num_1 - num_2}")
     elif function_op == 3:
-        print(f"Ответ равен {num_1 * num_2}")
+        print(f"{num_1}*{num_2}={num_1 * num_2}")
     elif function_op == 4:
-        print(f"Ответ равен {num_1 / num_2}")
+        print(f"{num_1}/{num_2}={num_1 / num_2}")
     elif function_op == 5:
-        print(f"Ответ равен {num_1 ** num_2}")
+        print(f"{num_1}^{num_2}={num_1 ** num_2}")
     elif function_op == 6:
         print(f"Ответ равен {num_1 // num_2}")
     elif function_op == 7:
-        print(f"Ответ равен {num_1 % num_2}")
+        print(f"Остаток от деления {num_1} и {num_2} {num_1 % num_2}")
     elif function_op == 8:
-        print(f"Ответ равен {num_1 ** 0.5}")
+        print(f"Квадратный корень из {num_1} равен {num_1 ** 0.5}")
     else:
         print(f"Некорректная функция {function_op}")
 
@@ -244,10 +244,38 @@ def f17(num):
     print(f"Число {num} в научной записи, это {num:E}")
 
 
-version = "3.2.2"
+def f18(num):
+    print(f"Факториал числа {num} равен {math.factorial(num)}")
+
+
+def f19():
+    function_fib = int(input("""Выберите действие: 
+    1 - Вывести ряд чисел Фибоначчи с заданным количеством чисел.
+    (Функция в разработке, действие пока что одно)
+    """))
+    if function_fib == 1:
+        ans = ""
+        num_fib = int(input("Введите длину ряда чисел Фибоначчи "))
+        start_fib = [0, 1]
+        if num_fib <= 2:
+            for j in start_fib:
+                j = str(j)
+        elif num_fib > 2:
+            for i in range(2, num_fib):
+                ch_fib = start_fib[i - 2] + start_fib[i - 1]
+                start_fib.append(ch_fib)
+            for j in start_fib:
+                j = str(j)
+        for h in start_fib:
+            ans += str(h)
+            ans += " "
+        print(ans)
+
+
+version = "3.3"
 print(f"Добро пожаловать в Многофункциональный калькулятор (да и не только), версия {version}")
 super_function = int(input(
-    """Введите вид операции:
+    """Выберите функцию:
     0 - Информация о проекте
     1 - Операции с числами,
     2 - Сравнение чисел,
@@ -266,11 +294,17 @@ super_function = int(input(
     15 - Генератор надёжного пароля,
     16 - Перевод числа в разные системы счисления,
     17 - Переписать число в научную запись
+    18 - Вычисление факториала заданного числа
+    19 - Действия с числами Фибоначчи
     """))
 
 if super_function in [1, 2]:
     num_1 = float(input("Введите первое число "))
     num_2 = float(input("Введите второе число "))
+    if num_1 % 1 == 0:
+        num_1 = int(num_1)
+    if num_2 % 1 == 0:
+        num_2 = int(num_2)
     if super_function == 1:
         f1(num_1, num_2)
     elif super_function == 2:
@@ -299,33 +333,35 @@ elif super_function in [5, 6, 7, 8, 9, 10, 11, 12]:
         f11(st)
     elif super_function == 12:
         f12(st)
-elif super_function in [13, 14, 15]:
+elif super_function in [13, 14, 15, 19]:
     if super_function == 13:
         f13()
     elif super_function == 14:
         f14()
     elif super_function == 15:
         f15()
+    elif super_function == 19:
+        f19()
 elif super_function == 0:
     print("""
 Название проекта - Многофункциональный калькулятор
-Версия - 3.2.2(release)
+Версия - 3.3(release)
 Начало разработки проекта - 2 ноября 2025 года
 Последняя версия выпущена 19 декабря 2025 года
 Многофункциональный калькулятор не хранит данные о пользователях, мы заботимся о вашей конфиденциальности, все данные после нового запуска программы стираются
 Что нового в последних версиях:
-    1. Проведён тест на баги.
-    2. По первому пункту исправлено около 5 багов.
-    3. Функция сортировки чисел (3) существенно улучшена.
-    4. Полностью доделана функция операций с дробями (13).
-    5. Мелкие изменения в коде.
+    1. Добавлена функция 18.
+    2. Добавлена функция 19.
+    3. Изменён вывод результата в функции 1.
     """)
 
-elif super_function in [16, 17]:
+elif super_function in [16, 17, 18, 19]:
     num = int(input("Введите число "))
     if super_function == 16:
         f16(num)
     elif super_function == 17:
         f17(num)
+    elif super_function == 18:
+        f18(num)
 else:
     print(f"Некорректная функция {super_function}")
