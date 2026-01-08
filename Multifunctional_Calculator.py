@@ -155,52 +155,68 @@ def f12(s):
 
 def f13():
     function_dr = int(input("Введите операцию (1 - Сложение, 2 - Вычитание, 3 - Умножение, 4 - Деление) "))
-    c_1, ch_1, zn_1 = map(int, input("Введите первую дробь: целая часть (если её нет введите на её место 0) / числитель / знаменатель ").split(" / "))
-    c_2, ch_2, zn_2 = map(int, input("Введите вторую дробь: целая часть (если её нет введите на её место 0) / числитель / знаменатель ").split(" / "))
+    c_1, ch_1, zn_1 = map(str, input("Введите первую дробь: целая часть (если её нет введите на её место 0) / числитель / знаменатель ").split(" / "))
+    c_2, ch_2, zn_2 = map(str, input("Введите вторую дробь: целая часть (если её нет введите на её место 0) / числитель / знаменатель ").split(" / "))
     ch_answ = None
     zn_answ = None
     c_answ = 0
-    if function_dr == 1:
-        c_answ += c_1
-        c_answ += c_2
-    elif function_dr == 2:
-        c_answ += c_1 - c_2
-    elif function_dr in [3, 4]:
-        ch_1 += c_1 * zn_1
-        ch_2 += c_2 * zn_2
-    if function_dr == 1:
-        ch_answ = ch_1 + ch_2
-        zn_answ = zn_1
-    elif function_dr == 2:
-        ch_answ = ch_1 - ch_2
-        zn_answ = zn_1
-    if function_dr == 3:
-        ch_answ = ch_1 * ch_2
-        zn_answ = zn_1 * zn_2
-    elif function_dr == 4:
-        ch_answ = ch_1 * zn_2
-        zn_answ = zn_1 * ch_2
-    de = math.gcd(ch_answ, zn_answ)
-    ch_answ //= de
-    zn_answ //= de
-    while ch_answ >= zn_answ:
-        ch_answ -= zn_answ
-        c_answ += 1
-    print(f"Ответ равен {c_answ} целых, {ch_answ} / {zn_answ}")
+    err = False
+    for i in f"{c_1}{ch_1}{zn_1}{c_2}{ch_2}{zn_2}":
+        if i not in "0123456789":
+            err = True
+    if not err:
+        c_1, ch_1, zn_1 = int(c_1), int(ch_1), int(zn_1)
+        c_2, ch_2, zn_2 = int(c_2), int(ch_2), int(zn_2)
+        if function_dr == 1:
+            c_answ += c_1
+            c_answ += c_2
+        elif function_dr == 2:
+            c_answ += c_1 - c_2
+        elif function_dr in [3, 4]:
+            ch_1 += c_1 * zn_1
+            ch_2 += c_2 * zn_2
+        if function_dr == 1:
+            ch_answ = ch_1 + ch_2
+            zn_answ = zn_1
+        elif function_dr == 2:
+            ch_answ = ch_1 - ch_2
+            zn_answ = zn_1
+        if function_dr == 3:
+            ch_answ = ch_1 * ch_2
+            zn_answ = zn_1 * zn_2
+        elif function_dr == 4:
+            ch_answ = ch_1 * zn_2
+            zn_answ = zn_1 * ch_2
+        de = math.gcd(ch_answ, zn_answ)
+        ch_answ //= de
+        zn_answ //= de
+        while ch_answ >= zn_answ:
+            ch_answ -= zn_answ
+            c_answ += 1
+        print(f"Ответ равен {c_answ} целых, {ch_answ} / {zn_answ}")
 
 
 def f14():
     function_rand = int(input("Введите вид числа (1 - Целое, 2 - Десятичное) "))
-    l_border = int(input("Введите левую границу (ОБЯЗАТЕЛЬНО ЦЕЛОЕ ЧИСЛО) "))
-    r_border = int(input("Введите правую границу (ОБЯЗАТЕЛЬНО ЦЕЛОЕ ЧИСЛО) "))
-    if function_rand == 1:
-        rand_int = random.randint(l_border, r_border)
-        print(rand_int)
-    elif function_rand == 2:
-        rand_float = random.uniform(l_border, r_border)
-        print(str(rand_float).replace(".", ","))
+    l_border = str(input("Введите левую границу (ОБЯЗАТЕЛЬНО ЦЕЛОЕ ЧИСЛО) "))
+    r_border = str(input("Введите правую границу (ОБЯЗАТЕЛЬНО ЦЕЛОЕ ЧИСЛО) "))
+    err = False
+    for i in f"{l_border}{r_border}":
+        if i not in "0123456789":
+            err = True
+    if not err:
+        l_border = int(l_border)
+        r_border = int(r_border)
+        if function_rand == 1:
+            rand_int = random.randint(l_border, r_border)
+            print(rand_int)
+        elif function_rand == 2:
+            rand_float = random.uniform(l_border, r_border)
+            print(str(rand_float).replace(".", ","))
+        else:
+            print(f"Некорректный вид числа {function_rand}")
     else:
-        print(f"Некорректный вид числа {function_rand}")
+        print("Вы ввели некорректное значение")
 
 
 def f15():
@@ -249,34 +265,42 @@ def f18(num):
 
 
 def f19():
-    function_fib = int(input("""Выберите действие: 
+    function_fib = str(input("""Выберите действие: 
     1 - Вывести ряд чисел Фибоначчи с заданным количеством чисел.
     (Функция в разработке, действие пока что одно)
     """))
-    if function_fib == 1:
-        ans = ""
-        num_fib = int(input("Введите длину ряда чисел Фибоначчи "))
-        start_fib = [0, 1]
-        if num_fib <= 2:
-            for j in start_fib:
-                j = str(j)
-        elif num_fib > 2:
-            for i in range(2, num_fib):
-                ch_fib = start_fib[i - 2] + start_fib[i - 1]
-                start_fib.append(ch_fib)
-            for j in start_fib:
-                j = str(j)
-        for h in start_fib:
-            ans += str(h)
-            ans += " "
-        print(ans)
+    err = False
+    for i in function_fib:
+        if i not in "0123456789":
+            err = True
+    if not err:
+        function_fib = int(function_fib)
+        if function_fib == 1:
+            ans = ""
+            num_fib = int(input("Введите длину ряда чисел Фибоначчи "))
+            start_fib = [0, 1]
+            if num_fib <= 2:
+                for j in start_fib:
+                    j = str(j)
+            elif num_fib > 2:
+                for i in range(2, num_fib):
+                    ch_fib = start_fib[i - 2] + start_fib[i - 1]
+                    start_fib.append(ch_fib)
+                for j in start_fib:
+                    j = str(j)
+            for h in start_fib:
+                ans += str(h)
+                ans += " "
+            print(ans)
+    else:
+        print("Вы ввели некорректное значение")
 
 
 def f20(num_1, num_2):
     print(f"НОД {num_1} и {num_2} равен {math.gcd(num_1, num_2)}")
 
 
-version = "3.4"
+version = "4.0"
 print(f"Добро пожаловать в Многофункциональный калькулятор (да и не только), версия {version}")
 super_function = int(input(
     """Выберите функцию:
@@ -304,24 +328,46 @@ super_function = int(input(
     """))
 
 if super_function in [1, 2, 20]:
-    num_1 = float(input("Введите первое число "))
-    num_2 = float(input("Введите второе число "))
-    if num_1 % 1 == 0:
-        num_1 = int(num_1)
-    if num_2 % 1 == 0:
-        num_2 = int(num_2)
-    if super_function == 1:
-        f1(num_1, num_2)
-    elif super_function == 2:
-        f2(num_1, num_2)
-    elif super_function == 20:
-        f20(num_1, num_2)
+    num_1 = str(input("Введите первое число "))
+    num_2 = str(input("Введите второе число "))
+    err = False
+    for i in num_1:
+       if i not in "0123456789.":
+           err = True
+    for i in num_2:
+        if i not in "0123456789.":
+            err = True
+    if not err:
+        num_1 = float(num_1)
+        num_2 = float(num_2)
+        if num_1 % 1 == 0:
+            num_1 = int(num_1)
+        if num_2 % 1 == 0:
+            num_2 = int(num_2)
+        if super_function == 1:
+            f1(num_1, num_2)
+        elif super_function == 2:
+            f2(num_1, num_2)
+        elif super_function == 20:
+            f20(num_1, num_2)
+    else:
+        print("Вы ввели некорректное значение")
 elif super_function in [3, 4]:
-    nums = list(map(float, input("Введите числа в одну строку через пробел ").split()))
-    if super_function == 3:
-        f3(nums)
-    elif super_function == 4:
-        f4(nums)
+    nums = list(map(str, input("Введите числа в одну строку через пробел ").split()))
+    err = False
+    for num in nums:
+        for j in num:
+            if j not in "0123456789.":
+                err = True
+    if not err:
+        for num in nums:
+            num = float(num)
+        if super_function == 3:
+            f3(nums)
+        elif super_function == 4:
+            f4(nums)
+    else:
+        print("Вы ввели некорректное значение")
 elif super_function in [5, 6, 7, 8, 9, 10, 11, 12]:
     st = input("Введите строку ")
     if super_function == 5:
@@ -352,15 +398,16 @@ elif super_function in [13, 14, 15, 19]:
 elif super_function == 0:
     print("""
 Название проекта - Многофункциональный калькулятор
-Версия - 3.3(release)
+Версия - 4.0(release)
 Начало разработки проекта - 2 ноября 2025 года
-Последняя версия выпущена 19 декабря 2025 года
+Последняя версия выпущена 8 января 2026 года
 Многофункциональный калькулятор не хранит данные о пользователях, мы заботимся о вашей конфиденциальности, все данные после нового запуска программы стираются
 Что нового в последних версиях:
     1. Добавлена функция 18.
     2. Добавлена функция 19.
     3. Изменён вывод результата в функции 1.
     4. Добавлена функция 20.
+    5. Завершение разработки первой фазы проекта, добавление проверок.
     """)
 
 elif super_function in [16, 17, 18, 19]:
