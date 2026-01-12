@@ -3,8 +3,7 @@ import math
 import random
 
 def f1(num_1, num_2):
-    function_op = int(input("""
-Введите операцию:
+    function_op = int(input("""Введите операцию:
      1 - Сложение
      2 - Вычитание
      3 - Умножение
@@ -45,15 +44,16 @@ def f2(num_1, num_2):
 
 
 def f3(nums):
-    rev = False
     function_sort = int(input("Введите вид сортировки (1 - По возрастанию, 2 - По убыванию) "))
-    nums_str = ""
+    nums_ans = ""
+    nums_new = []
     if function_sort == 2:
-        rev = True
-    nums.sort(reverse=rev)
-    for i in nums:
-        nums_str += str(f"{i} ")
-    print(nums_str)
+        nums_new = sorted(nums, reverse=True)
+    else:
+        nums_new = sorted(nums)
+    for i in nums_new:
+        nums_ans += str(f"{i} ")
+    print(nums_ans)
     if function_sort not in [1, 2]:
         print(f"Некорректная функция {function_sort}")
 
@@ -115,8 +115,7 @@ def f9(st_p):
 
 def f10(st_iz):
     function_iz = int(
-        input("""
-Что необходимо сделать:
+        input("""Что необходимо сделать:
     1 - Сделать все буквы строчными
     2 - Сделать все буквы заглавными
     3 - Сделать первую букву заглавной
@@ -361,19 +360,11 @@ if super_function in [1, 2, 20]:
     else:
         print("Вы ввели некорректное значение")
 elif super_function in [3, 4]:
-    nums = list(map(str, input("Введите числа в одну строку через пробел ").split()))
-    err = False
-    for num in nums:
-        for j in num:
-            if j not in "0123456789.":
-                err = True
-    if not err:
-        for num in nums:
-            num = float(num)
-        if super_function == 3:
-            f3(nums)
-        elif super_function == 4:
-            f4(nums)
+    nums = list(map(int, input("Введите числа в одну строку через пробел ").split()))
+    if super_function == 3:
+        f3(nums)
+    elif super_function == 4:
+        f4(nums)
     else:
         print("Вы ввели некорректное значение")
 elif super_function in [5, 6, 7, 8, 9, 10, 11, 12]:
