@@ -336,8 +336,8 @@ super_function = int(input(
     """))
 
 if super_function in [1, 2, 20]:
-    num_1 = str(input("Введите первое число "))
-    num_2 = str(input("Введите второе число "))
+    num_1 = input("Введите первое число ").replace(",", ".")
+    num_2 = input("Введите второе число ").replace(",", ".")
     err = False
     for i in num_1:
        if i not in "0123456789.":
